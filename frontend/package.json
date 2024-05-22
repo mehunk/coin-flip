@@ -24,6 +24,7 @@
     "@wagmi/cli": "latest",
     "autoprefixer": "^10.4.19",
     "buffer": "^6.0.3",
+    "daisyui": "^4.11.1",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5",
