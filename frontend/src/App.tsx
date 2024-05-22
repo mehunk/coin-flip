@@ -1,46 +1,25 @@
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
-
 function App() {
-  const account = useAccount()
-  const { connectors, connect, status, error } = useConnect()
-  const { disconnect } = useDisconnect()
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <div>
-        <h2>Account</h2>
+    <div className="container mx-auto flex flex-col items-center py-6">
+      <h1 className="text-5xl font-bold">Coin Flip</h1>
 
-        <div>
-          status: {account.status}
-          <br />
-          addresses: {JSON.stringify(account.addresses)}
-          <br />
-          chainId: {account.chainId}
+      <div className="py-4 flex w-64 justify-between">
+        <div className="form-control">
+          <label className="label cursor-pointer">
+            <input type="radio" name="coin" className="radio" />
+            <span className="label-text">Heads</span>
+          </label>
         </div>
-
-        {account.status === 'connected' && (
-          <button type="button" onClick={() => disconnect()}>
-            Disconnect
-          </button>
-        )}
+        <div className="form-control">
+          <label className="label cursor-pointer">
+            <input type="radio" name="coin" className="radio" />
+            <span className="label-text">Tails</span>
+          </label>
+        </div>
       </div>
 
-      <div>
-        <h2>Connect</h2>
-        {connectors.map((connector) => (
-          <button
-            key={connector.uid}
-            onClick={() => connect({ connector })}
-            type="button"
-          >
-            {connector.name}
-          </button>
-        ))}
-        <div>{status}</div>
-        <div>{error?.message}</div>
-      </div>
-    </>
+      <button className="btn btn-lg">Connect</button>
+    </div>
   )
 }
 
