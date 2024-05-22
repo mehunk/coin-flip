@@ -1,4 +1,9 @@
+import { useAccount, useConnect } from 'wagmi'
+
 function App() {
+  const account = useAccount()
+  const { connectors, connect } = useConnect()
+
   return (
     <div className="container mx-auto flex flex-col items-center py-6">
       <h1 className="text-5xl font-bold">Coin Flip</h1>
@@ -18,7 +23,14 @@ function App() {
         </div>
       </div>
 
-      <button className="btn btn-lg">Connect</button>
+      {account.status !== 'connected' && connectors.length > 0 && (
+        <button
+          className="btn btn-lg"
+          onClick={() => connect({ connector: connectors[0] })}
+        >
+          Connect
+        </button>
+      )}
     </div>
   )
 }
