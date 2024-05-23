@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { useAccount, useConnect } from 'wagmi'
 
+import useFlipCoin from './hooks/useFlipCoin'
 import Modal from './components/ui/Modal'
 import ResultModal from './components/ResultModal'
 
@@ -15,20 +16,25 @@ const OPTIONS = [
   },
 ]
 
+function hasPredicted(prediction: boolean | undefined): prediction is boolean {
+  return typeof prediction !== 'undefined'
+}
+
 function App() {
   const [prediction, setPrediction] = useState<boolean>()
   const [won, setWon] = useState<boolean>()
-  const [isLoading, setLoading] = useState(false)
   const account = useAccount()
   const { connectors, connect } = useConnect()
+  const { isLoading, flipCoin } = useFlipCoin()
 
   const load = useCallback(() => {
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-      setWon(true)
-    }, 5_000)
-  }, [])
+    if (!hasPredicted(prediction)) {
+      return
+    }
+    flipCoin(prediction).then((result) => {
+      setWon(result)
+    })
+  }, [prediction])
 
   const reset = useCallback(() => {
     setWon(undefined)
@@ -72,9 +78,15 @@ function App() {
         </button>
       )}
 
-      <button className="btn btn-lg" onClick={load}>
-        Flip
-      </button>
+      {account.status === 'connected' && (
+        <button
+          className="btn btn-lg"
+          onClick={load}
+          disabled={!hasPredicted(prediction)}
+        >
+          Flip
+        </button>
+      )}
 
       <Modal visible={isLoading}>
         <div className="flex justify-center">
