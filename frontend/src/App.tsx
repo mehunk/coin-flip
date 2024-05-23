@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useAccount, useConnect } from 'wagmi'
+
+import Modal from './components/ui/Modal'
 
 const OPTIONS = [
   {
@@ -14,8 +16,14 @@ const OPTIONS = [
 
 function App() {
   const [prediction, setPrediction] = useState<boolean>()
+  const [isLoading, setLoading] = useState(false)
   const account = useAccount()
   const { connectors, connect } = useConnect()
+
+  const load = useCallback(() => {
+    setLoading(true)
+    setTimeout(() => setLoading(false), 5_000)
+  }, [])
 
   return (
     <div className="container mx-auto flex flex-col items-center py-6">
@@ -49,6 +57,16 @@ function App() {
           Connect
         </button>
       )}
+
+      <button className="btn btn-lg" onClick={load}>
+        Flip
+      </button>
+
+      <Modal visible={isLoading}>
+        <div className="flex justify-center">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      </Modal>
     </div>
   )
 }
