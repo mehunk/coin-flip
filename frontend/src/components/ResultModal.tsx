@@ -2,12 +2,13 @@ import Modal from './ui/Modal'
 
 type Props = {
   won?: boolean
+  prizeAmount?: string
   onPlayAgain: () => void
 }
 
-function ResultModal({ won, onPlayAgain }: Props) {
+function ResultModal({ won, prizeAmount, onPlayAgain }: Props) {
   const description = won
-    ? 'Congratulations! You win the game!'
+    ? `Congratulations! You win the game and have got ${prizeAmount}ETH prize!`
     : "I'm sorry! You lose the game."
 
   return (

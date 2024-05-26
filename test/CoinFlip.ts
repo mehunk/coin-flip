@@ -20,6 +20,11 @@ describe('CoinFlip', function () {
       mockV3Aggregator.address,
     ])
 
+    await deployer.sendTransaction({
+      to: coinFlip.address,
+      value: parseEther('1.0'),
+    })
+
     return {
       publicClient,
       deployer,
@@ -39,13 +44,25 @@ describe('CoinFlip', function () {
     })
 
     it('Should win if the guess is correct', async function () {
-      const { coinFlip, deployer } = await loadFixture(deployCoinFlipFixture)
+      const { coinFlip, deployer, publicClient } = await loadFixture(
+        deployCoinFlipFixture
+      )
 
-      await coinFlip.write.flipCoin([true], {
+      const startingDeployerBalance = await publicClient.getBalance({
+        address: deployer.account.address,
+      })
+
+      const hash = await coinFlip.write.flipCoin([true], {
         value: parseEther('0.001'),
       })
 
       const events = await coinFlip.getEvents.Land()
+
+      const txReceipt = await publicClient.waitForTransactionReceipt({ hash })
+
+      const endingDeployerBalance = await publicClient.getBalance({
+        address: deployer.account.address,
+      })
 
       expect(events).to.have.length.above(0)
 
@@ -56,6 +73,14 @@ describe('CoinFlip', function () {
         deployer.account.address.toUpperCase()
       )
       assert.equal(event.args.won, true)
+      assert.equal(event.args.amount, parseEther('0.001') * 2n)
+
+      assert.equal(
+        endingDeployerBalance,
+        startingDeployerBalance +
+          parseEther('0.001') -
+          txReceipt.effectiveGasPrice * txReceipt.gasUsed
+      )
     })
 
     it('Should lose if the guess is wrong', async function () {
@@ -76,6 +101,7 @@ describe('CoinFlip', function () {
         deployer.account.address.toUpperCase()
       )
       assert.equal(event.args.won, false)
+      assert.equal(event.args.amount, 0n)
     })
 
     it('Balance should be greater than 0', async () => {
@@ -83,7 +109,7 @@ describe('CoinFlip', function () {
         deployCoinFlipFixture
       )
 
-      await coinFlip.write.flipCoin([true], {
+      await coinFlip.write.flipCoin([false], {
         value: parseEther('0.001'),
       })
 

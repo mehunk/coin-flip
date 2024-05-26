@@ -23,6 +23,7 @@ function hasPredicted(prediction: boolean | undefined): prediction is boolean {
 function App() {
   const [prediction, setPrediction] = useState<boolean>()
   const [won, setWon] = useState<boolean>()
+  const [prizeAmount, setPrizeAmount] = useState<string>()
   const account = useAccount()
   const { connectors, connect } = useConnect()
   const { isLoading, flipCoin } = useFlipCoin()
@@ -31,8 +32,9 @@ function App() {
     if (!hasPredicted(prediction)) {
       return
     }
-    flipCoin(prediction).then((result) => {
-      setWon(result)
+    flipCoin(prediction).then(({ won, prizeAmount }) => {
+      setWon(won)
+      setPrizeAmount(prizeAmount)
     })
   }, [prediction])
 
@@ -94,7 +96,7 @@ function App() {
         </div>
       </Modal>
 
-      <ResultModal won={won} onPlayAgain={reset} />
+      <ResultModal won={won} prizeAmount={prizeAmount} onPlayAgain={reset} />
     </div>
   )
 }

@@ -296,7 +296,7 @@ export const aggregatorV3InterfaceAbi = [
 
 /**
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const coinFlipAbi = [
   {
@@ -317,9 +317,16 @@ export const coinFlipAbi = [
         indexed: false,
       },
       { name: 'won', internalType: 'bool', type: 'bool', indexed: false },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
     ],
     name: 'Land',
   },
+  { type: 'fallback', stateMutability: 'payable' },
   {
     type: 'function',
     inputs: [],
@@ -347,20 +354,21 @@ export const coinFlipAbi = [
     ],
     stateMutability: 'view',
   },
+  { type: 'receive', stateMutability: 'payable' },
 ] as const
 
 /**
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const coinFlipAddress = {
   31337: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
-  11155111: '0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77',
+  11155111: '0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34',
 } as const
 
 /**
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const coinFlipConfig = {
   address: coinFlipAddress,
@@ -789,7 +797,7 @@ export const useReadAggregatorV3InterfaceVersion =
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link coinFlipAbi}__
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useReadCoinFlip = /*#__PURE__*/ createUseReadContract({
   abi: coinFlipAbi,
@@ -800,7 +808,7 @@ export const useReadCoinFlip = /*#__PURE__*/ createUseReadContract({
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link coinFlipAbi}__ and `functionName` set to `"MINIMUM_USD"`
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useReadCoinFlipMinimumUsd = /*#__PURE__*/ createUseReadContract({
   abi: coinFlipAbi,
@@ -812,7 +820,7 @@ export const useReadCoinFlipMinimumUsd = /*#__PURE__*/ createUseReadContract({
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link coinFlipAbi}__ and `functionName` set to `"getPriceFeed"`
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useReadCoinFlipGetPriceFeed = /*#__PURE__*/ createUseReadContract({
   abi: coinFlipAbi,
@@ -824,7 +832,7 @@ export const useReadCoinFlipGetPriceFeed = /*#__PURE__*/ createUseReadContract({
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link coinFlipAbi}__
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useWriteCoinFlip = /*#__PURE__*/ createUseWriteContract({
   abi: coinFlipAbi,
@@ -835,7 +843,7 @@ export const useWriteCoinFlip = /*#__PURE__*/ createUseWriteContract({
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link coinFlipAbi}__ and `functionName` set to `"flipCoin"`
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useWriteCoinFlipFlipCoin = /*#__PURE__*/ createUseWriteContract({
   abi: coinFlipAbi,
@@ -847,7 +855,7 @@ export const useWriteCoinFlipFlipCoin = /*#__PURE__*/ createUseWriteContract({
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link coinFlipAbi}__
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useSimulateCoinFlip = /*#__PURE__*/ createUseSimulateContract({
   abi: coinFlipAbi,
@@ -858,7 +866,7 @@ export const useSimulateCoinFlip = /*#__PURE__*/ createUseSimulateContract({
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link coinFlipAbi}__ and `functionName` set to `"flipCoin"`
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useSimulateCoinFlipFlipCoin =
   /*#__PURE__*/ createUseSimulateContract({
@@ -871,7 +879,7 @@ export const useSimulateCoinFlipFlipCoin =
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link coinFlipAbi}__
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useWatchCoinFlipEvent = /*#__PURE__*/ createUseWatchContractEvent({
   abi: coinFlipAbi,
@@ -882,7 +890,7 @@ export const useWatchCoinFlipEvent = /*#__PURE__*/ createUseWatchContractEvent({
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link coinFlipAbi}__ and `eventName` set to `"Land"`
  *
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xD1f10fE79C6a72F189FBEd55a4d2A04E15666E77)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xa4Dc3bEB2A6Ed22906AaBfa9f808882bBF3EBD34)
  */
 export const useWatchCoinFlipLandEvent =
   /*#__PURE__*/ createUseWatchContractEvent({

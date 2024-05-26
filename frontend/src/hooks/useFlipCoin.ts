@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import { waitForTransactionReceipt, watchContractEvent } from '@wagmi/core'
 import { useChainId, useAccount } from 'wagmi'
-import { parseEther } from 'viem'
+import { parseEther, formatEther } from 'viem'
 
 import {
   coinFlipAddress,
@@ -9,6 +9,11 @@ import {
   useWriteCoinFlipFlipCoin,
 } from '../generated'
 import { config } from '../wagmi'
+
+type LandEventResult = {
+  won: boolean
+  prizeAmount: string
+}
 
 function useFlipCoin() {
   const { address } = useAccount()
@@ -18,7 +23,7 @@ function useFlipCoin() {
 
   const waitForLandEvent = useCallback(
     (hash: string) => {
-      return new Promise<boolean>((resolve) => {
+      return new Promise<LandEventResult>((resolve) => {
         const unwatch = watchContractEvent(config, {
           address: coinFlipAddress[chainId],
           abi: coinFlipAbi,
@@ -30,7 +35,10 @@ function useFlipCoin() {
             const log = logs[0]
             if (log.transactionHash === hash) {
               unwatch()
-              resolve(log.args.won as boolean)
+              resolve({
+                won: log.args.won as boolean,
+                prizeAmount: formatEther(log.args.amount as bigint),
+              })
             }
           },
         })

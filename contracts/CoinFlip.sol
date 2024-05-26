@@ -15,7 +15,7 @@ import './PriceConverter.sol';
 contract CoinFlip {
   using PriceConverter for uint256;
 
-  event Land(address sender, bool won);
+  event Land(address sender, bool won, uint256 amount);
 
   AggregatorV3Interface private s_priceFeed;
 
@@ -25,6 +25,10 @@ contract CoinFlip {
   constructor(address priceFeedAddress) {
     s_priceFeed = AggregatorV3Interface(priceFeedAddress);
   }
+
+  fallback() external payable {}
+
+  receive() external payable {}
 
   /// Place bets, guess and then get the result
   /// @param heads Heads or tails, true for heads and false for tails
@@ -36,7 +40,17 @@ contract CoinFlip {
 
     bool _heads = getRandomBool();
 
-    emit Land(msg.sender, heads == _heads);
+    bool result = heads == _heads;
+
+    uint256 amount = 0;
+
+    if (result) {
+      amount = msg.value * 2;
+      (bool callSuccess, ) = payable(msg.sender).call{value: amount}('');
+      require(callSuccess, 'Call failed');
+    }
+
+    emit Land(msg.sender, result, amount);
   }
 
   /// Return a random boolean
