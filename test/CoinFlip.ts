@@ -1,7 +1,7 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { expect, assert } from 'chai'
 import hre from 'hardhat'
-import { parseEther } from 'viem'
+import { parseEther, parseEventLogs } from 'viem'
 
 import { DECIMALS, INITIAL_ANSWER } from '../constants'
 
@@ -56,9 +56,12 @@ describe('CoinFlip', function () {
         value: parseEther('0.001'),
       })
 
-      const events = await coinFlip.getEvents.Land()
-
       const txReceipt = await publicClient.waitForTransactionReceipt({ hash })
+
+      const events = parseEventLogs({
+        logs: txReceipt.logs,
+        abi: coinFlip.abi,
+      })
 
       const endingDeployerBalance = await publicClient.getBalance({
         address: deployer.account.address,
@@ -84,13 +87,20 @@ describe('CoinFlip', function () {
     })
 
     it('Should lose if the guess is wrong', async function () {
-      const { coinFlip, deployer } = await loadFixture(deployCoinFlipFixture)
+      const { coinFlip, deployer, publicClient } = await loadFixture(
+        deployCoinFlipFixture
+      )
 
-      await coinFlip.write.flipCoin([false], {
+      const hash = await coinFlip.write.flipCoin([false], {
         value: parseEther('0.001'),
       })
 
-      const events = await coinFlip.getEvents.Land()
+      const txReceipt = await publicClient.waitForTransactionReceipt({ hash })
+
+      const events = parseEventLogs({
+        logs: txReceipt.logs,
+        abi: coinFlip.abi,
+      })
 
       expect(events).to.have.length.above(0)
 
