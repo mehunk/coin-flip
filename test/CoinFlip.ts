@@ -10,7 +10,6 @@ describe('CoinFlip', function () {
     const publicClient = await hre.viem.getPublicClient()
     const [deployer] = await hre.viem.getWalletClients()
 
-    // @ts-ignore
     const mockV3Aggregator = await hre.viem.deployContract('MockV3Aggregator', [
       DECIMALS,
       INITIAL_ANSWER,
