@@ -4,7 +4,15 @@ import '@nomicfoundation/hardhat-toolbox-viem'
 const ALCHEMY_API_KEY = vars.get('ALCHEMY_API_KEY')
 
 const config: HardhatUserConfig = {
-  solidity: '0.8.24',
+  solidity: {
+    version: '0.8.19',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  },
   networks: {
     sepolia: {
       chainId: 11155111,
