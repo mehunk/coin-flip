@@ -44,10 +44,10 @@ function App() {
   }, [])
 
   return (
-    <div className="container mx-auto flex flex-col items-center py-16">
+    <div className="container mx-auto flex flex-col items-center py-16 px-4">
       <h1 className="text-5xl font-bold">Coin Flip</h1>
 
-      <ul className="my-20 py-4 grid gap-6 md:grid-cols-2">
+      <ul className="my-20 py-4 grid gap-6 grid-cols-2">
         {OPTIONS.map((option) => (
           <li key={option.value.toString()}>
             <input
@@ -63,7 +63,7 @@ function App() {
               htmlFor={`coin-${option.value.toString()}`}
               className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100"
             >
-              <div className="w-32 h-32 text-lg font-semibold flex justify-center items-center">
+              <div className="w-28 h-28 text-lg font-semibold flex justify-center items-center">
                 {option.label}
               </div>
             </label>
@@ -73,7 +73,7 @@ function App() {
 
       {account.status !== 'connected' && connectors.length > 0 && (
         <button
-          className="btn btn-lg"
+          className="btn btn-lg w-full sm:w-auto"
           onClick={() => connect({ connector: connectors[0] })}
         >
           Connect
@@ -82,7 +82,7 @@ function App() {
 
       {account.status === 'connected' && (
         <button
-          className="btn btn-lg"
+          className="btn btn-lg w-full sm:w-auto"
           onClick={load}
           disabled={!hasPredicted(prediction)}
         >
